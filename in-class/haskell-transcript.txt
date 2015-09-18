@@ -1,0 +1,614 @@
+GHCi, version 7.10.2: http://www.haskell.org/ghc/  :? for help
+Prelude> 2
+2
+Prelude> 2+2
+4
+Prelude> 2+2*5
+12
+Prelude> 2^3
+8
+Prelude> 2^64
+18446744073709551616
+Prelude> 2^128
+340282366920938463463374607431768211456
+Prelude> 10^60
+1000000000000000000000000000000000000000000000000000000000000
+Prelude> 10^10
+10000000000
+Prelude> 10^100
+10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+Prelude> mod 3 2
+1
+Prelude> 3 mod 2
+
+<interactive>:18:1:
+    Non type-variable argument
+      in the constraint: Num ((a -> a -> a) -> a -> t)
+    (Use FlexibleContexts to permit this)
+    When checking that ‘it’ has the inferred type
+      it :: forall a a1 t.
+            (Integral a, Num a1, Num ((a -> a -> a) -> a1 -> t)) =>
+            t
+Prelude> 3 `mod` 2
+1
+Prelude> 
+Prelude> 3 / 2
+1.5
+Prelude> 3 `div` 2
+1
+Prelude> 10^100
+10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+Prelude> [1,2,3,4]
+[1,2,3,4]
+Prelude> sum [1,2,3,4]
+10
+Prelude> sum [1,2,3,4,5,6,7,78,8]
+114
+Prelude> ["hello","cruel","world"] ++ ["and","goodbye"]
+["hello","cruel","world","and","goodbye"]
+Prelude> ["hello","cruel","world"] ++ [1,2,3]
+
+<interactive>:28:31:
+    No instance for (Num [Char]) arising from the literal ‘1’
+    In the expression: 1
+    In the second argument of ‘(++)’, namely ‘[1, 2, 3]’
+    In the expression: ["hello", "cruel", "world"] ++ [1, 2, 3]
+Prelude> :t ["hello","world"]
+["hello","world"] :: [[Char]]
+Prelude> :t "hello, world"
+"hello, world" :: [Char]
+Prelude> :t (++)
+(++) :: [a] -> [a] -> [a]
+Prelude> :t (sum)
+(sum) :: (Num a, Foldable t) => t a -> a
+Prelude> :t foldl
+foldl :: Foldable t => (b -> a -> b) -> b -> t a -> b
+Prelude> :t foldr
+foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
+Prelude> 
+Prelude> 
+Prelude> 
+Prelude> foldl (+) 0 [1,2,3,4,5]
+15
+Prelude> sum [1,2,3,4,5]
+15
+Prelude> let fortune_cookie x = x ++ "."
+Prelude> fortune_cookie "hello"
+"hello."
+Prelude> let fortune_cookie x = x ++ "in bed."
+Prelude> fortune_cookie "you will have great fortune"
+"you will have great fortunein bed."
+Prelude> let fortune_cookie x = x ++ ", in bed."
+Prelude> fortune_cookie "you will have great fortune"
+"you will have great fortune, in bed."
+Prelude> :t fortune_cookie
+fortune_cookie :: [Char] -> [Char]
+Prelude> :t (++)
+(++) :: [a] -> [a] -> [a]
+Prelude> let my_own_sum x = foldl (+) 0 x
+Prelude> my_own_sum [1,2,3,4,5]
+15
+Prelude> sum [1,2,3,4,5]
+15
+Prelude> :t (foldl)
+(foldl) :: Foldable t => (b -> a -> b) -> b -> t a -> b
+Prelude> prod
+
+<interactive>:52:1:
+    Not in scope: ‘prod’
+    Perhaps you meant ‘pred’ (imported from Prelude)
+Prelude> product
+
+<interactive>:53:1:
+    No instance for (Show (t0 a0 -> a0))
+      (maybe you haven't applied enough arguments to a function?)
+      arising from a use of ‘print’
+    In the first argument of ‘print’, namely ‘it’
+    In a stmt of an interactive GHCi command: print it
+Prelude> let my_own_sum x = foldl (+) 0 x
+Prelude> let my_own_sum x = foldl (+) 0 x
+Prelude> let my_own_sum = foldl (+) 0
+Prelude> :t
+
+<no location info>: not an expression: ‘’
+Prelude> :t my_own_sum
+my_own_sum :: (Num b, Foldable t) => t b -> b
+Prelude> let increment = (+) 1
+Prelude> increment 2
+3
+Prelude> increment 3
+4
+Prelude> let it_rain = foldl increment 0
+
+<interactive>:62:21:
+    Occurs check: cannot construct the infinite type: b ~ a -> b
+    Expected type: b -> a -> b
+      Actual type: (a -> b) -> a -> b
+    Relevant bindings include
+      it_rain :: t a -> b (bound at <interactive>:62:5)
+    In the first argument of ‘foldl’, namely ‘increment’
+    In the expression: foldl increment 0
+Prelude> :t increment
+increment :: Num a => a -> a
+Prelude> :t foldl
+foldl :: Foldable t => (b -> a -> b) -> b -> t a -> b
+Prelude> let increment = (+) 1
+Prelude> :t increment
+increment :: Num a => a -> a
+Prelude> let increment = (+)
+Prelude> let it_rain = foldl increment 0
+Prelude> let my_own_sum = foldl (+) 0
+Prelude> let product = foldl (*) 1
+Prelude> product [1,2,3,4,5]
+120
+Prelude> let countdown x = if x == 0 then [] else x:(countdown x-1)
+
+<interactive>:72:5:
+    Non type-variable argument in the constraint: Num [t]
+    (Use FlexibleContexts to permit this)
+    When checking that ‘countdown’ has the inferred type
+      countdown :: forall t. (Eq t, Num t, Num [t]) => t -> [t]
+Prelude> let countdown x = if x = 0 then [] else x:(countdown x-1)
+
+<interactive>:73:19:
+    parse error in if statement: missing required then and else clauses
+Prelude> let countdown x = if x == 0 then [] else x:(countdown x-1)
+
+<interactive>:74:5:
+    Non type-variable argument in the constraint: Num [t]
+    (Use FlexibleContexts to permit this)
+    When checking that ‘countdown’ has the inferred type
+      countdown :: forall t. (Eq t, Num t, Num [t]) => t -> [t]
+Prelude> let product = foldl (*) 1
+Prelude> product [1,2,3,4,5]
+120
+Prelude> :t filter
+filter :: (a -> Bool) -> [a] -> [a]
+Prelude> filter (\x -> x `mod` 2 == 0) [1,2,3,4,5,6,7,8,9]
+[2,4,6,8]
+Prelude> let foo = [1,2,3,4,5,6,7,8,9]
+Prelude> filter (\x -> x `mod` 2 == 0) foo
+[2,4,6,8]
+Prelude> foo
+[1,2,3,4,5,6,7,8,9]
+Prelude> 
+GHCi, version 7.10.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :t sum
+sum :: (Num a, Foldable t) => t a -> a
+Prelude> :t foldl
+foldl :: Foldable t => (b -> a -> b) -> b -> t a -> b
+Prelude> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Prelude> :load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+
+haskell-intro.hs:1:7:
+    No instance for (Foldable t0) arising from a use of ‘foldl’
+    The type variable ‘t0’ is ambiguous
+
+    Relevant bindings include
+      sum :: t0 Integer -> Integer (bound at haskell-intro.hs:1:1)
+    Note: there are several potential instances:
+      instance Foldable (Either a) -- Defined in ‘Data.Foldable’
+      instance Foldable Data.Proxy.Proxy -- Defined in ‘Data.Foldable’
+      instance GHC.Arr.Ix i => Foldable (GHC.Arr.Array i)
+        -- Defined in ‘Data.Foldable’
+      ...plus three others
+    In the expression: foldl (+) 0
+    In an equation for ‘Main.sum’: Main.sum = foldl (+) 0
+Failed, modules loaded: none.
+Prelude> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude> :load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude> :load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> sum [1,2,3,4]
+
+<interactive>:16:1:
+    Ambiguous occurrence ‘sum’
+    It could refer to either ‘Main.sum’,
+                             defined at haskell-intro.hs:4:1
+                          or ‘Prelude.sum’,
+                             imported from ‘Prelude’ at haskell-intro.hs:1:1
+                             (and originally defined in ‘Data.Foldable’)
+*Main> Main.sum [1,2,3,4]
+10
+*Main> Prelude.sum [1,2,3,4]
+10
+*Main> length [1,2,3,4]
+4
+*Main> length [1,2,3,4,3,5,7,4,3,3]
+10
+*Main> average
+
+<interactive>:21:1: Not in scope: ‘average’
+*Main> :load "haskell-intro.hs"
+
+haskell-intro.hs:4:18: parse error on input ‘,’
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> :t min
+min :: Ord a => a -> a -> a
+Prelude> :t max
+max :: Ord a => a -> a -> a
+Prelude> min 2 3
+2
+Prelude> max 2 3
+3
+Prelude> :t minimum
+minimum :: (Ord a, Foldable t) => t a -> a
+Prelude> :t maximum
+maximum :: (Ord a, Foldable t) => t a -> a
+Prelude> sum
+
+<interactive>:29:1:
+    No instance for (Show (t0 a0 -> a0))
+      (maybe you haven't applied enough arguments to a function?)
+      arising from a use of ‘print’
+    In the first argument of ‘print’, namely ‘it’
+    In a stmt of an interactive GHCi command: print it
+Prelude> :t sum
+sum :: (Num a, Foldable t) => t a -> a
+Prelude> :t summation
+
+<interactive>:1:1: Not in scope: ‘summation’
+Prelude> (sum [1,2,4])
+7
+Prelude> (sum [1,2,4]) / (0 x)
+
+<interactive>:33:20: Not in scope: ‘x’
+Prelude> (sum [1,2,4]) / (0 [1,2,4])
+
+<interactive>:34:1:
+    Non type-variable argument in the constraint: Num ([t] -> a)
+    (Use FlexibleContexts to permit this)
+    When checking that ‘it’ has the inferred type
+      it :: forall a t. (Fractional a, Num t, Num ([t] -> a)) => a
+Prelude> 5 / 2
+2.5
+Prelude> 5 (/) 2
+
+<interactive>:36:1:
+    Non type-variable argument
+      in the constraint: Num ((a -> a -> a) -> a -> t)
+    (Use FlexibleContexts to permit this)
+    When checking that ‘it’ has the inferred type
+      it :: forall a a1 t.
+            (Fractional a, Num a1, Num ((a -> a -> a) -> a1 -> t)) =>
+            t
+Prelude> :t (/)
+(/) :: Fractional a => a -> a -> a
+Prelude> let avg x = sum x / length x
+
+<interactive>:38:19:
+    Could not deduce (Fractional Int) arising from a use of ‘/’
+    from the context (Foldable t)
+      bound by the inferred type of avg :: Foldable t => t Int -> Int
+      at <interactive>:38:5-28
+    In the expression: sum x / length x
+    In an equation for ‘avg’: avg x = sum x / length x
+Prelude> let avg x = (sum x) / (length x)
+
+<interactive>:39:21:
+    Could not deduce (Fractional Int) arising from a use of ‘/’
+    from the context (Foldable t)
+      bound by the inferred type of avg :: Foldable t => t Int -> Int
+      at <interactive>:39:5-32
+    In the expression: (sum x) / (length x)
+    In an equation for ‘avg’: avg x = (sum x) / (length x)
+Prelude> let avg x = (sum x) / (length x)
+
+<interactive>:40:21:
+    Could not deduce (Fractional Int) arising from a use of ‘/’
+    from the context (Foldable t)
+      bound by the inferred type of avg :: Foldable t => t Int -> Int
+      at <interactive>:40:5-32
+    In the expression: (sum x) / (length x)
+    In an equation for ‘avg’: avg x = (sum x) / (length x)
+Prelude> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude> :load "haskell-intro.hs"
+
+haskell-intro.hs:4:24: parse error on input ‘,’
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> 
+Prelude> :load "haskell-intro.hs"
+
+haskell-intro.hs:8:21:
+    Could not deduce (Fractional Int) arising from a use of ‘/’
+    from the context (Foldable t)
+      bound by the inferred type of average :: Foldable t => t Int -> Int
+      at haskell-intro.hs:8:1-32
+    In the expression: (sum x) / (length x)
+    In an equation for ‘average’: average x = (sum x) / (length x)
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> :load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> average [1,2,3,4]
+2
+*Main> sum [1,2,3,4]
+10
+*Main> length [1,2,3,4]
+4
+*Main> 10 /4
+2.5
+*Main> 10 `div` 4
+2
+*Main> :load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> average [1,2,3,4]
+2
+*Main> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude> :load "haskell-intro.hs"
+
+haskell-intro.hs:8:19:
+    Could not deduce (Fractional Int) arising from a use of ‘/’
+    from the context (Foldable t)
+      bound by the inferred type of average :: Foldable t => t Int -> Int
+      at haskell-intro.hs:8:1-28
+    In the expression: sum x / length x
+    In an equation for ‘average’: average x = sum x / length x
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> :t 10
+10 :: Num a => a
+Prelude> :t [1,2,3,4]
+[1,2,3,4] :: Num t => [t]
+Prelude> :t [1.0,2,3,4]
+[1.0,2,3,4] :: Fractional t => [t]
+Prelude> [1,2,3,4]::[Int]
+[1,2,3,4]
+Prelude> :t [1,2,3,4]::[Int]
+[1,2,3,4]::[Int] :: [Int]
+Prelude> :t [1,2,3,4]
+[1,2,3,4] :: Num t => [t]
+Prelude> :t [1,2,3,4]::Fractional t => [t]
+[1,2,3,4]::Fractional t => [t] :: Fractional t => [t]
+Prelude> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude> :load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> 
+haskell-intro.hs:8:19:
+    Couldn't match type ‘a’ with ‘[t2]’
+      because type variable ‘t2’ would escape its scope
+    This (rigid, skolem) type variable is bound by
+      an expression type signature: Fractional t2 => [t2]
+      at haskell-intro.hs:8:14-41
+    Expected type: t1 [t2]
+      Actual type: t1 a
+    Relevant bindings include
+      x :: t1 a (bound at haskell-intro.hs:8:9)
+      average :: t1 a -> [t] (bound at haskell-intro.hs:8:1)
+    In the first argument of ‘sum’, namely ‘x’
+    In the first argument of ‘(/)’, namely
+      ‘((sum x) :: Fractional t => [t])’
+
+haskell-intro.hs:8:48:
+    Couldn't match expected type ‘[t2]’ with actual type ‘Int’
+    In the second argument of ‘(/)’, namely
+      ‘((length x) :: Fractional t => [t])’
+    In the expression:
+      ((sum x) :: Fractional t => [t])
+      / ((length x) :: Fractional t => [t])
+:cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude> :load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> 
+haskell-intro.hs:8:19:
+    Couldn't match type ‘a’ with ‘[t2]’
+      because type variable ‘t2’ would escape its scope
+    This (rigid, skolem) type variable is bound by
+      an expression type signature: Fractional t2 => [t2]
+      at haskell-intro.hs:8:14-41
+    Expected type: t1 [t2]
+      Actual type: t1 a
+    Relevant bindings include
+      x :: t1 a (bound at haskell-intro.hs:8:9)
+      average :: t1 a -> [t] (bound at haskell-intro.hs:8:1)
+    In the first argument of ‘sum’, namely ‘x’
+    In the first argument of ‘(/)’, namely
+      ‘((sum x) :: Fractional t => [t])’
+
+haskell-intro.hs:8:48:
+    Couldn't match expected type ‘[s]’ with actual type ‘Int’
+    In the second argument of ‘(/)’, namely
+      ‘((length x) :: Fractional s => [s])’
+    In the expression:
+      ((sum x) :: Fractional t => [t])
+      / ((length x) :: Fractional s => [s])
+
+Prelude> :load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> 
+haskell-intro.hs:8:19:
+    Couldn't match type ‘a’ with ‘[t2]’
+      because type variable ‘t2’ would escape its scope
+    This (rigid, skolem) type variable is bound by
+      an expression type signature: Fractional t2 => [t2]
+      at haskell-intro.hs:8:14-41
+    Expected type: t1 [t2]
+      Actual type: t1 a
+    Relevant bindings include
+      x :: t1 a (bound at haskell-intro.hs:8:9)
+      average :: t1 a -> [t] (bound at haskell-intro.hs:8:1)
+    In the first argument of ‘sum’, namely ‘x’
+    In the first argument of ‘(/)’, namely
+      ‘((sum x) :: Fractional t => [t])’
+
+haskell-intro.hs:8:47:
+    Couldn't match expected type ‘[t]’ with actual type ‘Int’
+    Relevant bindings include
+      average :: t1 a -> [t] (bound at haskell-intro.hs:8:1)
+    In the second argument of ‘(/)’, namely ‘(length x)’
+    In the expression: ((sum x) :: Fractional t => [t]) / (length x)
+:load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> 
+haskell-intro.hs:8:19:
+    Couldn't match type ‘a’ with ‘[t2]’
+      because type variable ‘t2’ would escape its scope
+    This (rigid, skolem) type variable is bound by
+      an expression type signature: Fractional t2 => [t2]
+      at haskell-intro.hs:8:14-41
+    Expected type: t1 [t2]
+      Actual type: t1 a
+    Relevant bindings include
+      x :: t1 a (bound at haskell-intro.hs:8:9)
+      average :: t1 a -> [t] (bound at haskell-intro.hs:8:1)
+    In the first argument of ‘sum’, namely ‘x’
+    In the first argument of ‘(/)’, namely
+      ‘((sum x) :: Fractional t => [t])’
+
+haskell-intro.hs:8:47:
+    Couldn't match expected type ‘[t]’ with actual type ‘Int’
+    Relevant bindings include
+      average :: t1 a -> [t] (bound at haskell-intro.hs:8:1)
+    In the second argument of ‘(/)’, namely ‘(length x)’
+    In the expression: ((sum x) :: Fractional t => [t]) / (length x)
+let foobear (x,ys) = zip (repeat x) ys
+Prelude> :t div
+div :: Integral a => a -> a -> a
+Prelude> :t (/)
+(/) :: Fractional a => a -> a -> a
+Prelude> :t [1,2,3,4]
+[1,2,3,4] :: Num t => [t]
+Prelude> fromIntegral 1
+1
+Prelude> :t fromIntegral 1
+fromIntegral 1 :: Num b => b
+Prelude> :t fromIntegral 1.0
+
+<interactive>:1:1:
+    Could not deduce (Integral a0) arising from a use of ‘fromIntegral’
+    from the context (Num b)
+      bound by the inferred type of it :: Num b => b at <interactive>:1:1
+    The type variable ‘a0’ is ambiguous
+    Note: there are several potential instances:
+      instance Integral Integer -- Defined in ‘GHC.Real’
+      instance Integral Int -- Defined in ‘GHC.Real’
+      instance Integral Word -- Defined in ‘GHC.Real’
+    In the expression: fromIntegral 1.0
+
+<interactive>:1:14:
+    Could not deduce (Fractional a0) arising from the literal ‘1.0’
+    from the context (Num b)
+      bound by the inferred type of it :: Num b => b at <interactive>:1:1
+    The type variable ‘a0’ is ambiguous
+    Note: there are several potential instances:
+      instance Integral a => Fractional (GHC.Real.Ratio a)
+        -- Defined in ‘GHC.Real’
+      instance Fractional Double -- Defined in ‘GHC.Float’
+      instance Fractional Float -- Defined in ‘GHC.Float’
+    In the first argument of ‘fromIntegral’, namely ‘1.0’
+    In the expression: fromIntegral 1.0
+Prelude> :t fromIntegral 1
+fromIntegral 1 :: Num b => b
+Prelude> :t 1
+1 :: Num a => a
+Prelude> :t fromInteger 1
+fromInteger 1 :: Num a => a
+Prelude> toInteger 1
+1
+Prelude> :t toInteger 1
+toInteger 1 :: Integer
+Prelude> :t toRational 1
+toRational 1 :: Rational
+Prelude> :t map
+map :: (a -> b) -> [a] -> [b]
+Prelude> let rationalize = map (toRational)
+Prelude> let rationalize = map toRational
+Prelude> :t rationalize
+rationalize :: Real a => [a] -> [Rational]
+Prelude> let vectorIncrement = map (\x -> x + 1)
+Prelude> [1,2,3,4,5]
+[1,2,3,4,5]
+Prelude> vectorIncrement [1,2,3,4,5]
+[2,3,4,5,6]
+Prelude> let vectorDivide = map (\x -> x / 2)
+Prelude> vectorDivide [1,2,3,4,5]
+[0.5,1.0,1.5,2.0,2.5]
+Prelude> :t vectorDivide
+vectorDivide :: Fractional b => [b] -> [b]
+Prelude> :t rationalize [1,2,3,4,5]
+rationalize [1,2,3,4,5] :: [Rational]
+Prelude> sum (rationalize [1,2,3,4,5])
+15 % 1
+Prelude> :t fromRealFrac
+
+<interactive>:1:1: Not in scope: ‘fromRealFrac’
+Prelude> 1::Fractional
+
+<interactive>:95:4:
+    Expecting one more argument to ‘Fractional’
+    Expected a type,
+      but ‘Fractional’ has kind ‘* -> GHC.Prim.Constraint’
+    In an expression type signature: Fractional
+    In the expression: 1 :: Fractional
+    In an equation for ‘it’: it = 1 :: Fractional
+Prelude> :t foldl1
+foldl1 :: Foldable t => (a -> a -> a) -> t a -> a
+Prelude> foldl1 (+) [1,2,3,4]
+10
+Prelude> foldl1 (*) [1,2,3,4]
+24
+Prelude> foldl1 (*) [5,1,2,3,4]
+120
+Prelude> foldl1 min [5,1,2,3,4]
+1
+Prelude> foldl1 max [5,1,2,3,4]
+5
+Prelude> :foldl1
+unknown command ':foldl1'
+use :? for help.
+Prelude> :t foldl1
+foldl1 :: Foldable t => (a -> a -> a) -> t a -> a
+Prelude> :t filter
+filter :: (a -> Bool) -> [a] -> [a]
+Prelude> filter (\x -> x `div` 2 == 0) [1,2,3,4,5,6]
+[1]
+Prelude> filter (\x -> x `div` 2 == 0) [1,2,3,4,5,6]
+[1]
+Prelude> filter (\x -> x `div` 2 == 1) [1,2,3,4,5,6]
+[2,3]
+Prelude> 1 `div` 1
+1
+Prelude> 1 `div` 2
+0
+Prelude> 2 `div` 2
+1
+Prelude> 3 `div` 2
+1
+Prelude> filter (\x -> x `mod` 2 == 0) [1,2,3,4,5,6]
+[2,4,6]
+Prelude> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude> :load "haskell-intro.hs"
+[1 of 1] Compiling Main             ( haskell-intro.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> average [1,2,3,4]
+2.5
+*Main> :t length
+length :: Foldable t => t a -> Int
+*Main> 

@@ -28,12 +28,12 @@ Please download SWI-Prolog, Haskell Platform and SBCL (links in table).
 |Prolog
 |http://www.swi-prolog.org/download/stable[SWI-Prolog]
 |Logic programming
-|http://www.learnprolognow.org/lpnpage.php?pageid=online[Learn Prolog Now!]
+|http://www.learnprolognow.org/lpnpage.php?pageid=online[Learn Prolog Now!] and https://en.wikibooks.org/wiki/Prolog[Prolog wikibook]
 
 |Haskell
 |https://www.haskell.org/platform/[Haskell Platform]
 |Functional programming
-|http://book.realworldhaskell.org/read/[Real World Haskell]
+|http://book.realworldhaskell.org/read/[Real World Haskell] and http://learnyouahaskell.com/[Learn you a Haskell (for great good)]
 
 |LISP
 |http://www.sbcl.org/platform-table.html[SBCL]
@@ -53,6 +53,8 @@ Please download SWI-Prolog, Haskell Platform and SBCL (links in table).
 
 Download SWI-Prolog, Haskell Platform and SBCL (links in table above),
 if you haven't already done so.
+
+NOTE: Mac users may need to install http://xquartz.macosforge.org/landing/[XQuartz]
 
 Install a decent text editor (e.g., https://notepad-plus-plus.org/[Notepad++], https://atom.io/[Atom]).
 
@@ -232,7 +234,7 @@ The example grammar is context-free because the left side of each arrow is a non
 
 image:http://lawrancej.github.io/COMP603-2015/scribbles/example-grammar.png[Example grammar and sentence]
 
-=== September 4
+== September 4
 
 Pull from upstream.
 
@@ -247,3 +249,117 @@ Prolog typically compiles into code for the https://en.wikipedia.org/wiki/Warren
 In SWI-Prolog, File -> Consult `~/COMP3071-2015/in-class/intro.pl` for an introduction to Prolog syntax.
 Open the same file in an editor, and run queries.
 
+== September 8
+
+Prolog stuff.
+
+== September 10
+
+Even more Prolog stuff.
+
+== September 11
+
+=== Lab 1
+
+*Due*: By next Friday at the latest.
+Save your work in a file called `lab1.pl` in your repo.
+
+----
+cd ~/COMP3017-2015
+touch lab1.pl
+----
+
+NOTE: Use
+http://notepad-plus-plus.org/download/v6.6.9.html[a proper text editor],
+https://atom.io[such as this].
+
+=== Trains
+
+----
+directTrain(avon, braintree).
+directTrain(quincy,avon).
+directTrain(newton,boston).
+directTrain(boston,avon).
+directTrain(braintree,milton).
+directTrain(westwood,newton).
+directTrain(canton, westwood).
+----
+
+This knowledge base holds facts about towns it is possible to travel between by taking a direct train.
+But of course, we can travel further by chaining together direct train journeys.
+Write a recursive predicate `travelBetween/2` that tells us when we can travel by train between two towns.
+
+*Example*: `travelBetween(canton,braintree).` Prolog should reply `true`
+
+*Example*: Whenever it is possible to take a direct train from A to B,
+it is also possible to take a direct train from B to A.
+For example, query `travelBetween(braintree, canton).` should return `true`.
+
+=== Translation
+
+----
+tran(eins,one).
+tran(zwei,two).
+tran(drei,three).
+tran(vier,four).
+tran(fuenf,five).
+tran(sechs,six).
+tran(sieben,seven).
+tran(acht,eight).
+tran(neun,nine).
+----
+
+Write a predicate `listtran(G,E)` which translates a list of German number words to the corresponding list of English number words.
+
+*Example*: `listtran([eins,neun,zwei],X).` should yield: `X = [one,nine,two].`
+
+Your program should also work in the other direction. 
+
+*Example*: `listtran(X,[one,seven,six,two]).` should yield: `X = [eins,sieben,sechs,zwei].`
+
+*Hint*: Handle the base case (the empty list) first, then for non-empty lists, first translate the head of the list, and then use recursion to translate the tail.
+
+=== Logic puzzle
+
+Use Prolog to solve a logic puzzle, by encoding facts as predicates.
+
+Use the "Animal Logic Puzzle" available here: http://kids.lovetoknow.com/wiki/Printable_Logic_Puzzles_for_Kids[Logic puzzles for kids]
+
+=== How to submit work
+
+Stage -> Commit -> Push
+
+----
+cd ~/COMP3071-2015
+touch lab1.pl
+git add lab1.pl
+git commit -m "Added lab 1 solution."
+git push origin master
+----
+
+== September 15
+
+* https://www.destroyallsoftware.com/talks/wat[WAT]
+* http://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/[PHP: A fractal of bad design]
+* http://foldl.com/[Reduce (foldl)] and http://foldr.com/[(foldr)]
+
+== September 17
+
+* https://www.haskell.org/hoogle/[Hoogle (Haskell documentation)]
+
+== September 18
+
+Pull from me. Look in `labs/Lab1.hs`
+
+----
+cd ~/COMP3071-2015
+git pull upstream master
+----
+
+Solve problems.
+
+----
+cd ~/COMP3071-2015
+git commit -am "Lab 1 done"
+git push origin master
+----
