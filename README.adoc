@@ -363,3 +363,22 @@ cd ~/COMP3071-2015
 git commit -am "Lab 1 done"
 git push origin master
 ----
+
+== September 22
+
+Go over the lab
+
+== September 24
+
+Out sick
+
+== September 25
+
+Out sick
+
+== September 29
+
+* I have returned
+* How to know you submitted stuff
+* Moar Haskell
+
