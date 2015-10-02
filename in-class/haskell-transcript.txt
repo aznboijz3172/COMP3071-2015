@@ -987,3 +987,622 @@ Ok, modules loaded: Main.
 *Main Data.Map Data.Char> foldl1 (\x y -> x ++ " " ++ y) (Data.List.map (\x -> phonetic ! toUpper x) "joeylawrance")
 "Juliett Oscar Echo Yankee Lima Alfa Whiskey Romeo Alfa November Charlie Echo"
 *Main Data.Map Data.Char> 
+GHCi, version 7.10.2: http://www.haskell.org/ghc/  :? for help
+Prelude> data Foobar = Foo | Bar
+Prelude> let x = Foo
+Prelude> :t x
+x :: Foobar
+Prelude> :t True
+True :: Bool
+Prelude> data Boolean = True' | False'
+Prelude> let optimus' = "soemthing"
+Prelude> :t optimus'
+optimus' :: [Char]
+Prelude> :t True
+True :: Bool
+Prelude> :t True'
+True' :: Boolean
+Prelude> :t Just 42
+Just 42 :: Num a => Maybe a
+Prelude> :t Nothing
+Nothing :: Maybe a
+Prelude> data Customer = Customer String Integer
+Prelude> Customer "Joey" 0
+
+<interactive>:20:1:
+    No instance for (Show Customer) arising from a use of ‘print’
+    In a stmt of an interactive GHCi command: print it
+Prelude> data Customer = Customer String Integer deriving (Show)
+Prelude> Customer "Joey" 0
+Customer "Joey" 0
+Prelude> data Customer = Customer { name :: String, cash :: Integer } deriving (Show)
+Prelude> Customer "Joey" 0
+Customer {name = "Joey", cash = 0}
+Prelude> let prof = Customer "Joey" 0
+Prelude> name prof
+"Joey"
+Prelude> cash prof
+0
+Prelude> let prof = Customer "Mike" 1000000
+Prelude> cash prof
+1000000
+Prelude> name prof
+"Mike"
+Prelude> let pay theCustomer = cash theCustomer ++
+
+<interactive>:31:42:
+    parse error (possibly incorrect indentation or mismatched brackets)
+Prelude> let pay theCustomer = (cash theCustomer) ++
+
+<interactive>:32:44:
+    parse error (possibly incorrect indentation or mismatched brackets)
+Prelude> let pay theCustomer amount = Customer (name theCustomer) ((cash theCustomer) amount)
+
+<interactive>:33:59:
+    Couldn't match expected type ‘t -> Integer’
+                with actual type ‘Integer’
+    Relevant bindings include
+      amount :: t (bound at <interactive>:33:21)
+      pay :: Customer -> t -> Customer (bound at <interactive>:33:5)
+    The function ‘cash’ is applied to two arguments,
+    but its type ‘Customer -> Integer’ has only one
+    In the second argument of ‘Customer’, namely
+      ‘((cash theCustomer) amount)’
+    In the expression:
+      Customer (name theCustomer) ((cash theCustomer) amount)
+Prelude> let pay theCustomer amount = Customer (name theCustomer) ((cash theCustomer) + amount)
+Prelude> prof
+Customer {name = "Mike", cash = 1000000}
+Prelude> pay prof 10
+Customer {name = "Mike", cash = 1000010}
+Prelude> pay prof 10
+Customer {name = "Mike", cash = 1000010}
+Prelude> pay prof 10
+Customer {name = "Mike", cash = 1000010}
+Prelude> let prof = pay prof 10
+Prelude> prof
+Customer {name = "
+Interrupted.
+Prelude> Prelude
+Prelude> data Num = 0 .. 5
+
+<interactive>:43:12:
+    Cannot parse data constructor in a data/newtype declaration: 0
+Prelude> data Rank = Rank 0 .. 5
+
+<interactive>:44:20: parse error on input ‘..’
+Prelude> data Rank = Rank 0 .. Rank 5
+
+<interactive>:45:20: parse error on input ‘..’
+Prelude> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Prelude> :load "cards.hs"
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+
+cards.hs:9:13:
+    No instance for (Show Rank)
+      arising from the second field of ‘Card’ (type ‘Rank’)
+    Possible fix:
+
+      use a standalone 'deriving instance' declaration,
+        so you can specify the instance context yourself
+    When deriving the instance for (Show Card)
+Failed, modules loaded: none.
+Prelude> :reload
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> Card Ace Spades
+
+<interactive>:49:6:
+    Couldn't match expected type ‘Suit’ with actual type ‘Rank’
+    In the first argument of ‘Card’, namely ‘Ace’
+    In the expression: Card Ace Spades
+
+<interactive>:49:10:
+    Couldn't match expected type ‘Rank’ with actual type ‘Suit’
+    In the second argument of ‘Card’, namely ‘Spades’
+    In the expression: Card Ace Spades
+*Main> Card Spades Ace
+Card {suit = Spades, rank = Ace}
+*Main> :reload
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> Card Spades Ace
+
+<interactive>:52:6:
+    Couldn't match expected type ‘Rank’ with actual type ‘Suit’
+    In the first argument of ‘Card’, namely ‘Spades’
+    In the expression: Card Spades Ace
+
+<interactive>:52:13:
+    Couldn't match expected type ‘Suit’ with actual type ‘Rank’
+    In the second argument of ‘Card’, namely ‘Ace’
+    In the expression: Card Spades Ace
+*Main> Card Ace Spades
+Card {rank = Ace, suit = Spades}
+*Main> Card Two Spades
+Card {rank = Two, suit = Spades}
+*Main> [0..10]
+[0,1,2,3,4,5,6,7,8,9,10]
+*Main> [Two..Ace]
+
+<interactive>:56:2: Not in scope: ‘Two..’
+
+<interactive>:56:2:
+    A section must be enclosed in parentheses thus: (Two.. Ace)
+*Main> Two
+Two
+*Main> Something
+
+<interactive>:58:1: Not in scope: data constructor ‘Something’
+*Main> 0 < 1
+True
+*Main> 0 > 1
+False
+*Main> Card Two Spades < Card Ace Spades
+
+<interactive>:61:17:
+    No instance for (Ord Card) arising from a use of ‘<’
+    In the expression: Card Two Spades < Card Ace Spades
+    In an equation for ‘it’: it = Card Two Spades < Card Ace Spades
+*Main> :reload
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> 
+cards.hs:9:19:
+    No instance for (Eq Card)
+      arising from the 'deriving' clause of a data type declaration
+    Possible fix:
+      use a standalone 'deriving instance' declaration,
+        so you can specify the instance context yourself
+    When deriving the instance for (Ord Card)
+
+Prelude> :reload
+
+cards.hs:9:19:
+    No instance for (Eq Rank)
+      arising from the first field of ‘Card’ (type ‘Rank’)
+    Possible fix:
+      use a standalone 'deriving instance' declaration,
+        so you can specify the instance context yourself
+    When deriving the instance for (Eq Card)
+
+cards.hs:9:23:
+    No instance for (Ord Rank)
+      arising from the first field of ‘Card’ (type ‘Rank’)
+    Possible fix:
+      use a standalone 'deriving instance' declaration,
+        so you can specify the instance context yourself
+    When deriving the instance for (Ord Card)
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> :reload
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> Card Two Spades < Card Ace Spades
+True
+*Main> Card Two Spades < Card Ace Diamonds
+True
+*Main> Card Two Spades < Card Two Diamonds
+True
+*Main> Card Three Spades < Card Two Diamonds
+False
+*Main> :reload
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+Failed, modules loaded: none.
+Prelude> 
+cards.hs:9:23:
+    No instance for (Ord Suit)
+      arising from the second field of ‘Card’ (type ‘Suit’)
+    Possible fix:
+      use a standalone 'deriving instance' declaration,
+        so you can specify the instance context yourself
+    When deriving the instance for (Ord Card)
+
+Prelude> :t (<)
+(<) :: Ord a => a -> a -> Bool
+Prelude> :reload
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+
+cards.hs:7:10: Warning:
+    No explicit implementation for
+      either ‘compare’ or ‘<=’
+    In the instance declaration for ‘Ord Suit’
+Ok, modules loaded: Main.
+*Main> :reload
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> Card Two Spades < Card Two Diamonds
+False
+*Main> Card Three Spades < Card Two Diamonds
+False
+*Main> Card Two Spades < Card Ace Diamonds
+True
+*Main> :reload
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> Tree (Tree (Leaf "hi") (Leaf "world")) Leaf "bye!"
+
+<interactive>:79:1:
+    Couldn't match expected type ‘[Char] -> t’
+                with actual type ‘Node [Char]’
+    Relevant bindings include it :: t (bound at <interactive>:79:1)
+    The function ‘Tree’ is applied to three arguments,
+    but its type ‘Node [Char] -> Node [Char] -> Node [Char]’
+    has only two
+    In the expression:
+      Tree (Tree (Leaf "hi") (Leaf "world")) Leaf "bye!"
+    In an equation for ‘it’:
+        it = Tree (Tree (Leaf "hi") (Leaf "world")) Leaf "bye!"
+
+<interactive>:79:40:
+    Couldn't match expected type ‘Node [Char]’
+                with actual type ‘a0 -> Node a0’
+    Probable cause: ‘Leaf’ is applied to too few arguments
+    In the second argument of ‘Tree’, namely ‘Leaf’
+    In the expression:
+      Tree (Tree (Leaf "hi") (Leaf "world")) Leaf "bye!"
+*Main> Tree (Tree (Leaf "hi") (Leaf "world")) (Leaf "bye!")
+
+<interactive>:80:1:
+    No instance for (Show (Node [Char])) arising from a use of ‘print’
+    In a stmt of an interactive GHCi command: print it
+*Main> Tree (Tree (Leaf "hi") (Leaf "world")) (Leaf "bye!")
+GHCi, version 7.10.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Prelude> :load "cards.hs"
+[1 of 1] Compiling Main             ( cards.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> Leaf "hi"
+Leaf "hi"
+*Main> :t Leaf "hi"
+Leaf "hi" :: Node [Char]
+*Main> Tree (Leaf "hello") (Leaf "world")
+Tree (Leaf "hello") (Leaf "world")
+*Main> :t Tree (Leaf "hello") (Leaf "world")
+Tree (Leaf "hello") (Leaf "world") :: Node [Char]
+*Main> Maybe "not"
+
+<interactive>:14:1:
+    Not in scope: data constructor ‘Maybe’
+    Perhaps you meant variable ‘maybe’ (imported from Prelude)
+
+*Main> import Data.Maybe
+*Main Data.Maybe> Maybe "not"
+
+<interactive>:16:1:
+    Not in scope: data constructor ‘Maybe’
+    Perhaps you meant variable ‘maybe’ (imported from Data.Maybe)
+*Main Data.Maybe> Just "not"
+Just "not"
+*Main Data.Maybe> :t Just "not"
+Just "not" :: Maybe [Char]
+*Main Data.Maybe> :t Just "not right"
+Just "not right" :: Maybe [Char]
+*Main Data.Maybe> :t Nothing
+Nothing :: Maybe a
+*Main Data.Maybe> Just 21
+Just 21
+*Main Data.Maybe> Just 21 + Just 18
+
+<interactive>:22:1:
+    Non type-variable argument in the constraint: Num (Maybe a)
+    (Use FlexibleContexts to permit this)
+
+    When checking that ‘it’ has the inferred type
+      it :: forall a. (Num a, Num (Maybe a)) => Maybe a
+*Main Data.Maybe> (Just 21) + (Just 18)
+
+<interactive>:23:1:
+    Non type-variable argument in the constraint: Num (Maybe a)
+    (Use FlexibleContexts to permit this)
+
+    When checking that ‘it’ has the inferred type
+      it :: forall a. (Num a, Num (Maybe a)) => Maybe a
+*Main Data.Maybe> import Data.Maybe
+*Main Data.Maybe> isJust (Just 18)
+True
+*Main Data.Maybe> fromJust (Just 18)
+18
+*Main Data.Maybe> (Just 21) + (Just 18)
+
+<interactive>:27:1:
+    Non type-variable argument in the constraint: Num (Maybe a)
+    (Use FlexibleContexts to permit this)
+
+    When checking that ‘it’ has the inferred type
+      it :: forall a. (Num a, Num (Maybe a)) => Maybe a
+*Main Data.Maybe> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude Data.Maybe> :load "person.hs"
+[1 of 1] Compiling Main             ( person.hs, interpreted )
+Ok, modules loaded: Main.
+*Main Data.Maybe> Person "Joey" Nothing
+
+<interactive>:30:1:
+    No instance for (Show Person) arising from a use of ‘print’
+    In a stmt of an interactive GHCi command: print it
+*Main Data.Maybe> :reload
+[1 of 1] Compiling Main             ( person.hs, interpreted )
+Ok, modules loaded: Main.
+*Main Data.Maybe> Person "Joey" Nothing
+Person {name = "Joey", age = Nothing}
+*Main Data.Maybe> Person "Joey" Just 34
+
+<interactive>:33:1:
+    Couldn't match expected type ‘Integer -> t’
+                with actual type ‘Person’
+    Relevant bindings include it :: t (bound at <interactive>:33:1)
+    The function ‘Person’ is applied to three arguments,
+    but its type ‘String -> Maybe Int -> Person’ has only two
+    In the expression: Person "Joey" Just 34
+    In an equation for ‘it’: it = Person "Joey" Just 34
+
+<interactive>:33:15:
+    Couldn't match expected type ‘Maybe Int’
+                with actual type ‘a0 -> Maybe a0’
+    Probable cause: ‘Just’ is applied to too few arguments
+    In the second argument of ‘Person’, namely ‘Just’
+    In the expression: Person "Joey" Just 34
+*Main Data.Maybe> Person "Joey" (Just 34)
+Person {name = "Joey", age = Just 34}
+*Main Data.Maybe> Person "Joey" Nothing
+Person {name = "Joey", age = Nothing}
+*Main Data.Maybe> (Just 21) + (Just 18)
+
+<interactive>:36:1:
+    Non type-variable argument in the constraint: Num (Maybe a)
+    (Use FlexibleContexts to permit this)
+
+    When checking that ‘it’ has the inferred type
+      it :: forall a. (Num a, Num (Maybe a)) => Maybe a
+*Main Data.Maybe> :t fmap
+fmap :: Functor f => (a -> b) -> f a -> f b
+*Main Data.Maybe> let prof = Person "Joey" (Just 34)
+*Main Data.Maybe> age prof
+Just 34
+*Main Data.Maybe> age prof + 1
+
+<interactive>:40:10:
+    No instance for (Num (Maybe Int)) arising from a use of ‘+’
+    In the expression: age prof + 1
+    In an equation for ‘it’: it = age prof + 1
+*Main Data.Maybe> let increment x = x + 1
+*Main Data.Maybe> age prof
+Just 34
+*Main Data.Maybe> increment (age prof)
+
+<interactive>:43:1:
+    No instance for (Num (Maybe Int)) arising from a use of ‘increment’
+    In the expression: increment (age prof)
+    In an equation for ‘it’: it = increment (age prof)
+*Main Data.Maybe> :t fmap
+fmap :: Functor f => (a -> b) -> f a -> f b
+*Main Data.Maybe> :t increment
+increment :: Num a => a -> a
+*Main Data.Maybe> increment 34
+35
+*Main Data.Maybe> age prof
+Just 34
+*Main Data.Maybe> :t age prof
+age prof :: Maybe Int
+*Main Data.Maybe> fmap increment (age prof)
+Just 35
+*Main Data.Maybe> fmap increment Nothing
+Nothing
+*Main Data.Maybe> let prof = Person "Joey" Nothing
+*Main Data.Maybe> fmap increment (age prof)
+Nothing
+*Main Data.Maybe> :t Nothing
+Nothing :: Maybe a
+*Main Data.Maybe> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude Data.Maybe> :load "cheating-in-haskell.hs"
+[1 of 1] Compiling Main             ( cheating-in-haskell.hs, interpreted )
+Ok, modules loaded: Main.
+*Main Data.Maybe> fromJust Just "from"
+
+<interactive>:56:10:
+    Couldn't match expected type ‘Maybe ([Char] -> t)’
+                with actual type ‘a0 -> Maybe a0’
+
+    Relevant bindings include it :: t (bound at <interactive>:56:1)
+    Probable cause: ‘Just’ is applied to too few arguments
+    In the first argument of ‘fromJust’, namely ‘Just’
+    In the expression: fromJust Just "from"
+*Main Data.Maybe> fromJust (Just "from")
+"from"
+*Main Data.Maybe> fromJust (Nothing)
+*** Exception: Maybe.fromJust: Nothing
+*Main Data.Maybe> :cd C:\Users\lawrancej\COMP3071-2015\in-class
+Warning: changing directory causes all loaded modules to be unloaded,
+because the search path has changed.
+Prelude Data.Maybe> :load "cheating-in-haskell.hs"
+[1 of 1] Compiling Main             ( cheating-in-haskell.hs, interpreted )
+Ok, modules loaded: Main.
+*Main Data.Maybe> add (Just 18) (Just 21)
+Just 39
+*Main Data.Maybe> :t (>>=)
+(>>=) :: Monad m => m a -> (a -> m b) -> m b
+*Main Data.Maybe> (Just 30) >>= (\x -> x - 1)
+
+<interactive>:63:1:
+    Non type-variable argument in the constraint: Num (Maybe b)
+    (Use FlexibleContexts to permit this)
+
+    When checking that ‘it’ has the inferred type
+      it :: forall b. Num (Maybe b) => Maybe b
+*Main Data.Maybe> :reload
+[1 of 1] Compiling Main             ( cheating-in-haskell.hs, interpreted )
+Ok, modules loaded: Main.
+*Main Data.Maybe> (Just 30) >>= (\x -> x - 1)
+
+<interactive>:65:11:
+    Ambiguous occurrence ‘>>=’
+    It could refer to either ‘Main.>>=’,
+                             defined at cheating-in-haskell.hs:10:10
+                          or ‘Prelude.>>=’,
+                             imported from ‘Prelude’ at cheating-in-haskell.hs:1:1
+                             (and originally defined in ‘GHC.Base’)
+*Main Data.Maybe> (Just 30) >>= (\x -> x - 1)
+
+<interactive>:66:11:
+    Ambiguous occurrence ‘>>=’
+    It could refer to either ‘Main.>>=’,
+                             defined at cheating-in-haskell.hs:10:10
+                          or ‘Prelude.>>=’,
+                             imported from ‘Prelude’ at cheating-in-haskell.hs:1:1
+                             (and originally defined in ‘GHC.Base’)
+*Main Data.Maybe> (>>=) (Just 30) (\x -> x - 1)
+
+<interactive>:67:1:
+    Ambiguous occurrence ‘>>=’
+    It could refer to either ‘Main.>>=’,
+                             defined at cheating-in-haskell.hs:10:10
+                          or ‘Prelude.>>=’,
+                             imported from ‘Prelude’ at cheating-in-haskell.hs:1:1
+                             (and originally defined in ‘GHC.Base’)
+*Main Data.Maybe> >>= (Just 30) (\x -> x - 1)
+
+<interactive>:68:1: parse error on input ‘>>=’
+*Main Data.Maybe> (Just 30) >>= (\x -> x - 1)
+
+<interactive>:69:11:
+    Ambiguous occurrence ‘>>=’
+    It could refer to either ‘Main.>>=’,
+                             defined at cheating-in-haskell.hs:10:10
+                          or ‘Prelude.>>=’,
+                             imported from ‘Prelude’ at cheating-in-haskell.hs:1:1
+                             (and originally defined in ‘GHC.Base’)
+*Main Data.Maybe> (Just 30) Main.>>= (\x -> x - 1)
+
+<interactive>:70:1:
+    Non type-variable argument in the constraint: Num (Maybe b)
+    (Use FlexibleContexts to permit this)
+
+    When checking that ‘it’ has the inferred type
+      it :: forall b. Num (Maybe b) => Maybe b
+*Main Data.Maybe> (Just 30::Int) Main.>>= (\x -> x - 1)
+
+<interactive>:71:2:
+    Couldn't match expected type ‘Int’ with actual type ‘Maybe Integer’
+    In the first argument of ‘(Main.>>=)’, namely ‘(Just 30 :: Int)’
+    In the expression: (Just 30 :: Int) Main.>>= (\ x -> x - 1)
+
+<interactive>:71:2:
+    Couldn't match expected type ‘Maybe (Maybe b)’
+                with actual type ‘Int’
+    Relevant bindings include
+      it :: Maybe b (bound at <interactive>:71:1)
+    In the first argument of ‘(Main.>>=)’, namely ‘(Just 30 :: Int)’
+    In the expression: (Just 30 :: Int) Main.>>= (\ x -> x - 1)
+    In an equation for ‘it’:
+        it = (Just 30 :: Int) Main.>>= (\ x -> x - 1)
+*Main Data.Maybe> (Just 30::Int) Main.>>= (\x -> x - 1::Int)
+
+<interactive>:72:2:
+    Couldn't match expected type ‘Int’ with actual type ‘Maybe Integer’
+    In the first argument of ‘(Main.>>=)’, namely ‘(Just 30 :: Int)’
+    In the expression: (Just 30 :: Int) Main.>>= (\ x -> x - 1 :: Int)
+
+<interactive>:72:2:
+    Couldn't match expected type ‘Maybe Int’ with actual type ‘Int’
+    In the first argument of ‘(Main.>>=)’, namely ‘(Just 30 :: Int)’
+    In the expression: (Just 30 :: Int) Main.>>= (\ x -> x - 1 :: Int)
+    In an equation for ‘it’:
+        it = (Just 30 :: Int) Main.>>= (\ x -> x - 1 :: Int)
+
+<interactive>:72:32:
+    Couldn't match expected type ‘Maybe b’ with actual type ‘Int’
+    Relevant bindings include
+      it :: Maybe b (bound at <interactive>:72:1)
+    In the expression: x - 1 :: Int
+    In the second argument of ‘(Main.>>=)’, namely
+      ‘(\ x -> x - 1 :: Int)’
+    In the expression: (Just 30 :: Int) Main.>>= (\ x -> x - 1 :: Int)
+*Main Data.Maybe> :reload
+[1 of 1] Compiling Main             ( cheating-in-haskell.hs, interpreted )
+Ok, modules loaded: Main.
+*Main Data.Maybe> (Just 30::Int) Main.>>= (\x -> x - 1::Int)
+
+<interactive>:74:16: Not in scope: ‘Main.>>=’
+*Main Data.Maybe> (Just 30::Int) >>= (\x -> x - 1::Int)
+
+<interactive>:75:2:
+    Couldn't match expected type ‘Int’ with actual type ‘Maybe Integer’
+    In the first argument of ‘(>>=)’, namely ‘(Just 30 :: Int)’
+    In the expression: (Just 30 :: Int) >>= (\ x -> x - 1 :: Int)
+
+<interactive>:75:2:
+    Couldn't match expected type ‘m Int’ with actual type ‘Int’
+    Relevant bindings include it :: m b (bound at <interactive>:75:1)
+
+    In the first argument of ‘(>>=)’, namely ‘(Just 30 :: Int)’
+    In the expression: (Just 30 :: Int) >>= (\ x -> x - 1 :: Int)
+    In an equation for ‘it’:
+        it = (Just 30 :: Int) >>= (\ x -> x - 1 :: Int)
+
+<interactive>:75:27:
+    Couldn't match expected type ‘m b’ with actual type ‘Int’
+    Relevant bindings include it :: m b (bound at <interactive>:75:1)
+    In the expression: x - 1 :: Int
+    In the second argument of ‘(>>=)’, namely ‘(\ x -> x - 1 :: Int)’
+    In the expression: (Just 30 :: Int) >>= (\ x -> x - 1 :: Int)
+*Main Data.Maybe> (Just 30::Int) >> (\x -> x - 1::Int)
+
+<interactive>:76:2:
+    Couldn't match expected type ‘Int’ with actual type ‘Maybe Integer’
+    In the first argument of ‘(>>)’, namely ‘(Just 30 :: Int)’
+    In the expression: (Just 30 :: Int) >> (\ x -> x - 1 :: Int)
+
+<interactive>:76:2:
+    Couldn't match expected type ‘Int -> a0’ with actual type ‘Int’
+    In the first argument of ‘(>>)’, namely ‘(Just 30 :: Int)’
+    In the expression: (Just 30 :: Int) >> (\ x -> x - 1 :: Int)
+    In an equation for ‘it’:
+        it = (Just 30 :: Int) >> (\ x -> x - 1 :: Int)
+*Main Data.Maybe> :reload
+[1 of 1] Compiling Main             ( cheating-in-haskell.hs, interpreted )
+Ok, modules loaded: Main.
+*Main Data.Maybe> add (Just 18) (Just 21)
+Just 39
+*Main Data.Maybe> :reload
+[1 of 1] Compiling Main             ( cheating-in-haskell.hs, interpreted )
+Ok, modules loaded: Main.
+*Main Data.Maybe> add (Just 18) (Just 21)
+Just 39
+*Main Data.Maybe> :reload
+
+cheating-in-haskell.hs:23:7: Not in scope: ‘liftM2’
+[1 of 1] Compiling Main             ( cheating-in-haskell.hs, interpreted )
+Failed, modules loaded: none.
+Prelude Data.Maybe> :reload
+[1 of 1] Compiling Main             ( cheating-in-haskell.hs, interpreted )
+Ok, modules loaded: Main.
+*Main Data.Maybe> add (Just 18) (Just 21)
+Just 39
+*Main Data.Maybe> :t liftM2
+liftM2 :: Monad m => (a1 -> a2 -> r) -> m a1 -> m a2 -> m r
+*Main Data.Maybe> let maybeIncrement = liftM increment
+
+<interactive>:85:28: Not in scope: ‘increment’
+*Main Data.Maybe> let increment x = x + 1
+*Main Data.Maybe> let maybeIncrement = liftM increment
+*Main Data.Maybe> maybeIncrement (Just 32)
+Just 33
+*Main Data.Maybe> :t increment
+increment :: Num a => a -> a
+*Main Data.Maybe> :t maybeIncrement
+maybeIncrement :: (Monad m, Num r) => m r -> m r
+*Main Data.Maybe> :t (Just 32)
+(Just 32) :: Num a => Maybe a
+*Main Data.Maybe> :t (>>=)
+(>>=) :: Monad m => m a -> (a -> m b) -> m b
+*Main Data.Maybe> :t return
+return :: Monad m => a -> m a
+*Main Data.Maybe> :t (>>)
+(>>) :: Monad m => m a -> m b -> m b
+*Main Data.Maybe> :t (>>=)
+(>>=) :: Monad m => m a -> (a -> m b) -> m b
+*Main Data.Maybe> 

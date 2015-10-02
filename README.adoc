@@ -382,3 +382,17 @@ Out sick
 * How to know you submitted stuff
 * Moar Haskell
 
+== October 1
+
+Monads and typeclasses
+
+== October 2
+
+----
+cd ~/COMP3071-2015
+git pull upstream master
+cabal update
+cabal install gloss
+ghc tictactoe.hs
+tictactoe.exe
+----
