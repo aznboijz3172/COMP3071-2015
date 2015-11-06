@@ -1,0 +1,26 @@
+
+-- Haskell
+data Boolean = True' | False'
+
+-- Java
+-- enum Boolean {True, False};
+
+Haskell: -- Can't edit these fields
+data Customer = Customer {name :: String, cash :: Integer} deriving (Show)
+let prof = Customer "Joey" 0
+name prof
+"Joey"
+cash prof 
+0
+
+Java:
+
+class Customer implements Serializable {
+String name;
+int cash;
+Customer (String n, int c)
+	{
+		this.name = n;
+		this.cash = c;
+	}
+										}
