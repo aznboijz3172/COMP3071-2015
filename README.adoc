@@ -388,11 +388,120 @@ Monads and typeclasses
 
 == October 2
 
+*Challenge*: Make a http://mypuzzle.org/sliding[sliding tile puzzle], or Connect4, or a snake game, or hangman, or pong.
+Use the tic-tac-toe source as inspiration.
+Feel free to work in pairs or small groups of 3.
+
+https://hackage.haskell.org/package/gloss[I'm glossing over gloss]
+
 ----
 cd ~/COMP3071-2015
 git pull upstream master
 cabal update
 cabal install gloss
+cd labs
 ghc tictactoe.hs
-tictactoe.exe
+./tictactoe.exe
 ----
+
+Also, https://en.wikipedia.org/wiki/Persistent_data_structure[Persistent data structures]
+
+== October 6
+
+* http://www.willamette.edu/~fruehr/haskell/evolution.html[The evolution of a Haskell programmer]
+* https://github.com/benl23x5/gloss[Gloss examples]
+
+== October 9
+
+http://www.stilldrinking.org/programming-sucks[Programming sucks]
+
+TODO:
+
+. Create your midterm project repo on https://github.com/new[github] or https://gitlab.com/projects/new[gitlab]
+. Add collaborators in your team:
+On Github:: Right hand side `Settings` -> Left hand side `Collaborators`
+On Gitlab:: Left hand side Group of people `Members` -> Add Members -> `lawrancej`. And Project Access -> `Developer`
+. Make sure I have access to it (I'm `lawrancej` on github and gitlab)
+. Make sure everybody on the team has access
+. Clone the repo:
+----
+cd
+git clone the-repo-goes-here
+----
+. If you're using a shared repo, you're done!
+Otherwise, be sure to add remotes for each remote
+----
+git remote add remote-goes-here
+----
+. Decide on a program to implement
+. Determine the data and functions in the Model
+. Determine how to show stuff to the user
+. Determine how to handle events from the user
+
+== October 13
+
+Models of computation:
+
+* Turing machines, P'', Brainfuck
+* Lambda calculus, Haskell
+
+== October 15
+
+Work on midterm project.
+
+== October 16
+
+Highlights from https://hackage.haskell.org/package/base-4.8.1.0/docs/[Haskell's API documentation]:
+
+* https://hackage.haskell.org/package/base-4.8.1.0/docs/Prelude.html[Built-in functions]
+* https://hackage.haskell.org/package/base-4.8.1.0/docs/Data-List.html[Handy list functions]
+* https://hackage.haskell.org/package/containers-0.5.6.3/docs/Data-Map-Strict.html[Handy map (dictionary) functions]
+* https://hackage.haskell.org/package/base-4.8.1.0/docs/Control-Monad.html[Sequencing actions]
+* https://hackage.haskell.org/package/base-4.8.1.0/docs/Debug-Trace.html[Debugging]
+* https://hackage.haskell.org/package/base-4.8.1.0/docs/System-IO.html[Input/Output]
+
+== October 30
+
+Present "Midterm" project
+
+== November 3
+
+* ASTs
+* AST traversal
+
+== November 5
+
+* http://www.antlr.org/[Parsing with ANTLR]
+
+----
+cd ~/COMP3071-2015/antlr
+./antlr.sh Expr.g4
+javac -cp antlr-4.5.1-complete.jar *.java
+echo "100+100*7" | ./grun.sh Expr prog -gui
+----
+
+== November 6
+
+* http://www.antlr.org/api/Java/index.html?overview-summary.html[ANTLR runtime API]
+* https://github.com/antlr/grammars-v4[ANTLR grammars]
+
+In Git Bash:
+
+----
+cd ~/COMP3071-2015/
+git pull upstream master
+cd language/
+./gradlew build
+./gradlew eclipse
+find .
+git checkout -- src/main/java/Main.java
+git checkout -- src/main/java/Printer.java
+----
+
+In Eclipse:
+
+. File -> Import...
+. General -> Existing Projects into workspace
+. Next
+. Select root directory `COMP3071-2015`
+. Finish

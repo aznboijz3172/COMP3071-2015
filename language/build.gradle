@@ -1,0 +1,29 @@
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "antlr"
+apply plugin: "application"
+
+mainClassName = "Main"
+
+// ./gradlew generateGrammarSource
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.8'
+}
+
+generateGrammarSource {
+    outputDirectory = new File('src/main/java')
+    arguments += ["-visitor", "-long-messages"]
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    mavenLocal();
+}
+
+dependencies {
+    antlr "org.antlr:antlr4:4.5.1-1"
+    testCompile "junit:junit:4.11"
+    compile 'org.antlr:antlr4-runtime:4.5.1-1'
+}
