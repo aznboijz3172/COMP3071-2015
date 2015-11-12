@@ -524,3 +524,12 @@ To update generated code:
 ----
 
 * https://en.wikipedia.org/wiki/PL/0[PL/0 grammar]
+
+== November 12
+
+To get up to speed:
+
+----
+cd ~/COMP3071-2015
+git pull upstream calculator-solution
+----
