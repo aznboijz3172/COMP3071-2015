@@ -16,6 +16,9 @@ public class Printer extends ExprBaseVisitor<String> {
 		return builder.toString();
 	}
 
+	public String visitStatement(ExprParser.StatementContext ctx) {
+		return ctx.id.getText() + " = " + this.visit(ctx.right);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -29,6 +32,9 @@ public class Printer extends ExprBaseVisitor<String> {
 		StringBuilder builder = new StringBuilder();
 		if (expression.number != null) {
 			builder.append(expression.number.getText());
+		}
+		if (expression.id != null) {
+			builder.append(expression.id.getText());
 		}
 		if (expression.sub != null) {
 			builder.append("(" + this.visit(expression.sub) + ")");
