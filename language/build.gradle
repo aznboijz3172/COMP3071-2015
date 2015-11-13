@@ -12,7 +12,14 @@ task wrapper(type: Wrapper) {
 }
 
 generateGrammarSource {
-    outputDirectory = new File('src/main/java')
+//    outputDirectory = new File('src/main/java')
+    doLast {
+        copy {
+            from 'build/generated-src/antlr/main/'
+            into 'src/main/java'
+        }
+        delete 'build/generated-src/antlr/main/'
+    }
     arguments += ["-visitor", "-long-messages"]
 }
 
