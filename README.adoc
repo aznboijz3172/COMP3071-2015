@@ -492,10 +492,11 @@ cd ~/COMP3071-2015/
 git pull upstream master
 cd language/
 ./gradlew build
-./gradlew eclipse
-find .
+git checkout -- src/main/java/Calculator.java
 git checkout -- src/main/java/Main.java
 git checkout -- src/main/java/Printer.java
+./gradlew eclipse
+find .
 ----
 
 In Eclipse:
@@ -505,3 +506,36 @@ In Eclipse:
 . Next
 . Select root directory `COMP3071-2015`
 . Finish
+
+=== Lab
+ 
+Write a calculator, using the Visitor pattern.
+
+*Hint*: Study `Parser.java`.
+Also, assume that we'll just parse one expression for now.
+Even though the grammar is capable of parsing more.
+
+== November 10
+
+To update generated code:
+
+----
+./gradlew generateGrammarSource
+----
+
+* https://en.wikipedia.org/wiki/PL/0[PL/0 grammar]
+
+== November 12
+
+To get up to speed:
+
+----
+cd ~/COMP3071-2015
+git pull upstream calculator-solution
+----
+
+== November 13 & beyond
+
+Implement some toy programming language or something that involves parsing and tree traversal (interpretation) in some meaningful way.
+
+For the final exam, we'll just present what we've got.
