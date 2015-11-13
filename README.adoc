@@ -533,3 +533,9 @@ To get up to speed:
 cd ~/COMP3071-2015
 git pull upstream calculator-solution
 ----
+
+== November 13 & beyond
+
+Implement some toy programming language or something that involves parsing and tree traversal (interpretation) in some meaningful way.
+
+For the final exam, we'll just present what we've got.
