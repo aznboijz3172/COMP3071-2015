@@ -2,7 +2,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Printer extends ExprBaseVisitor<String> {
 	@Override
-	public String visitProg(ExprParser.ProgContext ctx) {
+	public String visitBlock(ExprParser.BlockContext ctx) {
 		StringBuilder builder = new StringBuilder();
 		int i = 0;
 		for (ParseTree kid : ctx.children) {
