@@ -9,15 +9,15 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		Lexer lexer = new ExprLexer(new ANTLRInputStream(new StringReader("a=10-8+5/2\r\nb=2+2*2\r\nc=a+b\r\n")));
-//		Lexer lexer = new ExprLexer(new ANTLRFileStream("file-name-goes-here"));
+//		Lexer lexer = new ExprLexer(new ANTLRInputStream(new StringReader("a=10-8+5/2\r\nb=2+2*2\r\nc=a+b\r\nd=6%4\r\n")));
+		Lexer lexer = new ExprLexer(new ANTLRFileStream("test-program.txt"));
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		ExprParser parser = new ExprParser(tokens);
 		ParseTree tree = parser.prog();
 		
-		Printer printer = new Printer();
-		System.out.println(printer.visit(tree));
-		Calculator p = new Calculator();
+//		Printer printer = new Printer();
+//		System.out.println(printer.visit(tree));
+		Interpreter p = new Interpreter();
 		p.visit(tree);
 //		System.out.println(p.visit(tree));
 		for (String id : p.memory.keySet()) {

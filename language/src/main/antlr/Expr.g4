@@ -1,7 +1,9 @@
 grammar Expr;		
-prog:	(statement NEWLINE)* ;
-statement: id=ID '=' right=expr ;
-expr:	left=expr op=(TIMES|DIVIDE) right=expr
+prog:	block ;
+block:  (statement NEWLINE)* ;
+statement: id=ID '=' right=expr
+    | keyword='while' '(' left=expr condition=(LT|GT|EQ) right=expr ')' NEWLINE loop=block 'done' ; 
+expr:	left=expr op=(TIMES|DIVIDE|MOD) right=expr
     |	left=expr op=(PLUS|MINUS) right=expr
     |	number=INT
     |	id=ID
@@ -14,3 +16,8 @@ PLUS    : '+' ;
 MINUS   : '-' ;
 TIMES   : '*' ;
 DIVIDE  : '/' ;
+MOD : '%' ;
+LT : '<' ;
+GT : '>' ;
+EQ : '=' ;
+WS : (' ' | '\t')+ -> channel(HIDDEN);
