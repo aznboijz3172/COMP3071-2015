@@ -16,7 +16,7 @@ public class Interpreter extends ExprBaseVisitor<Double> {
 				this.visit(kid);
 			}
 		}
-		return this.visit(ctx.getChild(0));
+		return Double.NaN;
 	}
 	@Override
 	public Double visitProg(ExprParser.ProgContext ctx) {
@@ -47,8 +47,7 @@ public class Interpreter extends ExprBaseVisitor<Double> {
 		}
 		if (stmt.keyword != null) {
 			while (evalCondition(stmt)) {
-				System.out.println("Got here");
-				this.visit(stmt.block());
+				this.visit(stmt.loop);
 			}
 		}
 		return Double.NaN;
