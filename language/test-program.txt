@@ -1,6 +1,10 @@
 a=3
 b=0
+c=0
 while(a>0)
 a=a-1
 b=b+2
+done
+if(b>0)
+c=2
 done
