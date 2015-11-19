@@ -34,7 +34,7 @@ public class Interpreter extends ExprBaseVisitor<Double> {
 			condition = left > right;
 		}
 		if (stmt.condition.getType() == ExprParser.EQ) {
-			condition = left == right;
+			condition = Math.abs(left - right) < 0.0000001;
 		}
 		return condition;
 	}
@@ -46,8 +46,17 @@ public class Interpreter extends ExprBaseVisitor<Double> {
 			return result;
 		}
 		if (stmt.keyword != null) {
-			while (evalCondition(stmt)) {
-				this.visit(stmt.loop);
+			switch(stmt.keyword.getType()) {
+			case ExprParser.WHILE:
+				while (evalCondition(stmt)) {
+					this.visit(stmt.loop);
+				}
+				break;
+			case ExprParser.IF:
+				if (evalCondition(stmt)) {
+					this.visit(stmt.loop);
+				}
+				break;
 			}
 		}
 		return Double.NaN;
