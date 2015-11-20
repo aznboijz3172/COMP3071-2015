@@ -4,6 +4,7 @@ c=0
 while(a>0)
 a=a-1
 b=b+2
+output a
 done
 if(b>0)
 c=2
