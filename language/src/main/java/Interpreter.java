@@ -47,6 +47,9 @@ public class Interpreter extends ExprBaseVisitor<Double> {
 		}
 		if (stmt.keyword != null) {
 			switch(stmt.keyword.getType()) {
+			case ExprParser.OUTPUT:
+				System.out.println(this.visit(stmt.sub));
+				break;
 			case ExprParser.WHILE:
 				while (evalCondition(stmt)) {
 					this.visit(stmt.loop);
